@@ -24,19 +24,22 @@ film2.save()
 
 customer1 = Customer.new({
   'name' => "Joe",
-  'funds' => "50"
+  'funds' => "50",
+  'ticket_count' => 0
   })
 customer1.save()
 
 customer2 = Customer.new({
   'name' => "Rebecca",
-  'funds' => "20"
+  'funds' => "20",
+  'ticket_count' => 0
   })
 customer2.save()
 
 customer3 = Customer.new({
   'name' => "Victoria",
-  'funds' => "80"
+  'funds' => "80",
+  'ticket_count' => 0
   })
 customer3.save()
 

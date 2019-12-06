@@ -3,17 +3,18 @@ require_relative('../db/psql_runner')
 class Customer
 
   attr_reader :id
-  attr_accessor :name, :funds
+  attr_accessor :name, :funds, :ticket_count
 
   def initialize(options)
     @id = options['id'].to_i if options['id']
     @name = options['name']
     @funds = options['funds']
+    @ticket_count = options['ticket_count'].to_i
   end
 
   def save()
-    sql = "INSERT INTO customers (name, funds) VALUES ($1, $2) RETURNING id"
-    values = [@name, @funds]
+    sql = "INSERT INTO customers (name, funds, ticket_count) VALUES ($1, $2, $3) RETURNING id"
+    values = [@name, @funds, @ticket_count]
     customer = SqlRunner.run(sql, values).first
     @id = customer['id'].to_i
   end
@@ -25,8 +26,8 @@ class Customer
   end
 
   def update()
-   sql = "UPDATE customers SET (name, funds) = ($1, $2) WHERE id = $3"
-   values = [@name, @funds, @id]
+   sql = "UPDATE customers SET (name, funds) = ($1, $2, $3) WHERE id = $4"
+   values = [@name, @funds, @ticket_count, @id]
    SqlRunner.run(sql, values)
   end
 
