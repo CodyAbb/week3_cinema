@@ -57,11 +57,9 @@ class Customer
   def ticket_purchase()
     films = self.films()
     price_array = films.map { |object| object.price.to_i }
-    p price_array
     total_cost = price_array.reduce(0){|sum, n| sum + n}
-    p total_cost
-    @funds - total_cost
-    @ticket_count + price_array.length
+    @funds -= total_cost
+    @ticket_count += price_array.length
     return "Customer has #{@ticket_count} number of tickets and #{@funds} funds left"
   end
 
