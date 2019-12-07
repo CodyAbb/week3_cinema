@@ -52,4 +52,10 @@ class Film
     return results.map{ |hash| Customer.new(hash) }
   end
 
+  def customer_check
+    customers = self.customers()
+    customer_array = customers.map { |object| object }
+    return "Number of customers for this film is #{customer_array.length}"
+  end
+
 end
