@@ -1,4 +1,5 @@
 require_relative('../db/psql_runner')
+require_relative('./customer')
 
 class Ticket
 

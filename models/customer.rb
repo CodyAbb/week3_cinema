@@ -1,4 +1,5 @@
 require_relative('../db/psql_runner')
+require_relative('./film')
 
 class Customer
 
@@ -8,7 +9,7 @@ class Customer
   def initialize(options)
     @id = options['id'].to_i if options['id']
     @name = options['name']
-    @funds = options['funds']
+    @funds = options['funds'].to_i
     @ticket_count = options['ticket_count'].to_i
   end
 
@@ -46,11 +47,22 @@ class Customer
     sql = "
       SELECT films.* FROM films
       INNER JOIN tickets ON tickets.film_id = films.id
-      WHERE tickets.film_id = $1;
+      WHERE tickets.customer_id = $1;
     "
     values = [@id]
     results = SqlRunner.run(sql, values)
     return results.map{ |hash| Film.new(hash) }
+  end
+
+  def ticket_purchase()
+    films = self.films()
+    price_array = films.map { |object| object.price.to_i }
+    p price_array
+    total_cost = price_array.reduce(0){|sum, n| sum + n}
+    p total_cost
+    @funds - total_cost
+    @ticket_count + price_array.length
+    return "Customer has #{@ticket_count} number of tickets and #{@funds} funds left"
   end
 
 end
